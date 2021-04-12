@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>Video Game Sales</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<svg>
+    <g id="chart"></g>
+</svg>
+</body>
+
+<script>
+
+    var data = d3.csv("filteredSubset.csv")
+        .then(filterData)
+
+    var width = 800,
+        height = 800;
+
+    var svg = d3.select("#chart")
+        .append("svg")
+        .append("g")
+
+    var legend = svg
+        .append('g')
+        .attr('class', 'legend')
+        .attr("filter", "url(#dropshadow");
+
+    legend.append("rect")
+        .attr("x", 170)
+        .attr("y", 90)
+        .attr('width', 200)
+        .attr('height', 650)
+        .attr('fill', '#1c2442')
+        .attr("rx", 20)
+        .attr("ry", 20)
+
+
+    var bubbleChart = svg
+        .append('g')
+        .attr('class', 'bubbleChart')
+
+    const panel = svg
+        .append("g")
+        .attr("class", "panel")
+        .attr("filter", "url(#dropshadow");
+
+    // drop shadow
+    // ref from: https://stackoverflow.com/questions/12277776/how-to-add-drop-shadow-to-d3-js-pie-or-donut-chart
+    /* For the drop shadow filter... */
+    var defs = svg.append("defs");
+
+    var filter = defs.append("filter")
+        .attr("id", "dropshadow")
+
+    filter.append("feGaussianBlur")
+        .attr("in", "SourceAlpha")
+        .attr("stdDeviation", 5)
+        .attr("result", "blur");
+    filter.append("feOffset")
+        .attr("in", "blur")
+        .attr("dx", 2)
+        .attr("dy", 2)
+        .attr("result", "offsetBlur");
+
+    var feMerge = filter.append("feMerge");
+
+    feMerge.append("feMergeNode")
+        .attr("in", "offsetBlur")
+    feMerge.append("feMergeNode")
+        .attr("in", "SourceGraphic");
+
+    legend.append("circle").attr("cx",200).attr("cy",130).attr("r", 10).style("fill", "#FBA4FF")
+    legend.append("circle").attr("cx",200).attr("cy",180).attr("r", 10).style("fill", "#8CD9FF")
+    legend.append("circle").attr("cx",200).attr("cy",230).attr("r", 10).style("fill", "#ECDA00")
+    legend.append("circle").attr("cx",200).attr("cy",280).attr("r", 10).style("fill", "#FF9900")
+    legend.append("circle").attr("cx",200).attr("cy",330).attr("r", 10).style("fill", "#FF4F4F")
+    legend.append("circle").attr("cx",200).attr("cy",380).attr("r", 10).style("fill", "#4FFF54")
+    legend.append("circle").attr("cx",200).attr("cy",430).attr("r", 10).style("fill", "#AC1AFF")
+    legend.append("circle").attr("cx",200).attr("cy",480).attr("r", 10).style("fill", "#0100FF")
+    legend.append("circle").attr("cx",200).attr("cy",530).attr("r", 10).style("fill", "#FFFFFF")
+    legend.append("circle").attr("cx",200).attr("cy",580).attr("r", 10).style("fill", "#00FFEE")
+    legend.append("circle").attr("cx",200).attr("cy",630).attr("r", 10).style("fill", "#000000")
+    legend.append("circle").attr("cx",200).attr("cy",680).attr("r", 10).style("fill", "#89550B")
+    legend.append("text").attr("x", 220).attr("y", 130).text("Platform").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 220).attr("y", 180).text("Racing").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 220).attr("y", 230).text("Sports").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 220).attr("y", 280).text("Fighting").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 220).attr("y", 330).text("Shooter").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 220).attr("y", 380).text("Role-Playing").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 220).attr("y", 430).text("Strategy").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 220).attr("y", 480).text("Action").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 220).attr("y", 530).text("Misc").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 220).attr("y", 580).text("Simulation").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 220).attr("y", 630).text("Puzzle").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 220).attr("y", 680).text("Adventure").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+
+    var simulation = d3.forceSimulation()
+        .force("xForce", d3.forceX(width + 200).strength(0.05))
+        .force("yForce", d3.forceY((height/2)+100).strength(0.05))
+        .force("collide", d3.forceCollide(function(d) {
+            return radiusScale(d.Global_Sales) + 5;
+        }))
+
+    var activision = []
+    var bethesda = []
+    var ea = []
+    var nintendo = []
+    var ubisoft = []
+
+
+    var radiusScale = d3.scaleSqrt([1,83]).range([1,10])
+    var loadedData
+
+    function filterData(games) {
+        loadedData = games
+        for (i = 0; i < games.length; i++) {
+            if (games[i].Publisher == "Activision") {
+                activision.push(games[i])
+            }
+            else if (games[i].Publisher == "Bethesda Softworks") {
+                bethesda.push(games[i])
+            }
+            else if (games[i].Publisher == "Electronic Arts") {
+                ea.push(games[i])
+            }
+            else if (games[i].Publisher == "Nintendo") {
+                nintendo.push(games[i])
+            }
+            else if (games[i].Publisher == "Ubisoft") {
+                ubisoft.push(games[i])
+            }
+
+        }
+
+        drawCircles(games)
+    }
+
+    function drawCircles(games) {
+        var circles = bubbleChart.selectAll(".Game")
+            .data(games)
+            .enter().append("circle")
+            .attr("class", "Game")
+            .attr("class", d => {return d.Genre})
+            .attr("r", function(d) {
+                return radiusScale(d.Global_Sales)
+            })
+            .attr("fill", function(d) {
+                switch(d.Genre) {
+                    case "Platform":
+                        return "#FBA4FF"
+                    case "Racing":
+                        return "#8CD9FF"
+                    case "Sports":
+                        return "#ECDA00"
+                    case "Fighting":
+                        return "#FF9900"
+                    case "Shooter":
+                        return "#FF4F4F"
+                    case "Role-Playing":
+                        return "#4FFF54"
+                    case "Strategy":
+                        return "#AC1AFF"
+                    case "Action":
+                        return "#0100FF"
+                    case "Misc":
+                        return "#FFFFFF"
+                    case "Simulation":
+                        return "#00FFEE"
+                    case "Puzzle":
+                        return "#000000"
+                    case "Adventure":
+                        return "#89550B"
+                }
+            })
+            .attr("stroke", "none")
+            .attr("stroke-width", 3)
+            .attr("cx", 100)
+            .attr("cy", 100)
+            .on("click", handleClick)
+            .on("mouseover", handleMouseOver)
+            .on("mouseout", handleMouseOut)
+            .text(function(d) {
+                return d.Name;
+            })
+
+
+        simulation.nodes(games)
+            .on("tick", ticked)
+
+        function ticked() {
+            circles
+                .attr("cx", function(d) {
+                    return d.x
+                })
+                .attr("cy", function(d) {
+                    return d.y
+                })
+        }
+
+    }
+
+    function handleClick(d) {
+        console.log(d.path[0].__data__);
+        console.log(d.path[0].__data__.Name);
+    }
+
+    function handleMouseOver(d) {
+        // get game title
+        let title = d.path[0].__data__.Name
+
+        // update each node color
+        let selectedGenre = d.path[0].__data__.Genre
+        let games = bubbleChart.selectAll("circle")._groups[0]
+        let selected = []
+        let notSelected = []
+        games.forEach(elem => {
+            //console.log(elem.className.baseVal)
+            if (elem.className.baseVal == selectedGenre) {
+                selected.push(elem)
+            }
+            else {
+                notSelected.push(elem)
+            }
+        })
+        selected.forEach(elem => {
+
+        })
+        notSelected.forEach(elem => {
+            d3.select(elem).transition().duration(400).style("fill", "#485482").attr("opacity", 0.1)
+        })
+
+        // display data about genre
+        displayGenreData(d, selectedGenre)
+    }
+
+    function displayGenreData(d, selectedGenre) {
+        numSales = 0;
+        numScore = 0;
+        sumSales = 0;
+        sumCriticScore = 0;
+
+        loadedData.forEach(elem => {
+            if(elem.Genre == selectedGenre && elem.Critic_Score.length != 0) {
+                numSales += 1;
+                numScore += 1;
+                sumSales += parseFloat(elem.Global_Sales);
+                sumCriticScore += parseFloat(elem.Critic_Score);
+                //console.log(elem.Global_Sales);
+                //console.log(elem.Critic_Score);
+            }
+        })
+
+        //console.log(sumSales, numSales)
+
+        let avgGlobalSales = Number(sumSales / numSales).toFixed(2);
+        let avgCriticScore = Number(sumCriticScore / numScore).toFixed(2);
+
+
+        panel.append("rect")
+            .attr("x", 1420)
+            .attr("y", 90)
+            .attr('width', 580)
+            .attr('height', 800)
+            .attr('fill', '#1c2442')
+            .attr("rx", 20)
+            .attr("ry", 20)
+
+
+        panel
+        .append("text")
+        .attr("font-family", "Roboto")
+        .attr("class", "genreLabel").attr("x", 1450).attr("y", 150).attr("alignment-baseline","middle").attr("fill", "white")
+        .text("Genre: " + selectedGenre).style("font-size", "50px")
+
+
+        panel
+        .append("text")
+        .attr("font-family", "Roboto")
+        .attr("class", "sales").attr("x", 1450).attr("y", 260).attr("alignment-baseline","middle").attr("fill", "white")
+        .text("Avg global sales in millions (USD): " + avgGlobalSales).style("font-size", "30px")
+
+        panel
+        .append("text")
+        .attr("font-family", "Roboto")
+        .attr("class", "score").attr("x", 1450).attr("y", 360).attr("alignment-baseline","middle").attr("fill", "white")
+        .text("Avg critic score: " + avgCriticScore + "%").style("font-size", "30px")
+
+
+
+    }
+
+    function handleMouseOut(d) {
+        // remove panel
+        panel.selectAll("rect").remove();
+        // reset colors
+        let games = bubbleChart.selectAll("circle")._groups[0]
+        games.forEach(elem => {
+            let genre = elem.className.baseVal
+            d3.select(elem)
+                .interrupt()
+                .style("fill", function(d) {
+                switch(d.Genre) {
+                    case "Platform":
+                        return "#FBA4FF"
+                    case "Racing":
+                        return "#8CD9FF"
+                    case "Sports":
+                        return "#ECDA00"
+                    case "Fighting":
+                        return "#FF9900"
+                    case "Shooter":
+                        return "#FF4F4F"
+                    case "Role-Playing":
+                        return "#4FFF54"
+                    case "Strategy":
+                        return "#AC1AFF"
+                    case "Action":
+                        return "#0100FF"
+                    case "Misc":
+                        return "#FFFFFF"
+                    case "Simulation":
+                        return "#00FFEE"
+                    case "Puzzle":
+                        return "#000000"
+                    case "Adventure":
+                        return "#89550B"
+                }
+            })
+            .attr("opacity", 1.0)
+        })
+        // remove text
+        panel.selectAll("text").remove();
+    }
+
+
+</script>
+
+<style>
+    html, body {
+        margin: 0;
+        height: 100%;
+    }
+
+    svg {
+        background: #242A41;
+        height: 100%;
+        width: 100%;
+    }
+
+    .grid-parent {
+        display: grid;
+    }
+</style>
+
+
+</html>
