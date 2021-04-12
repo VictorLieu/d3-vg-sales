@@ -39,10 +39,19 @@
         .attr("rx", 20)
         .attr("ry", 20)
 
-
     var bubbleChart = svg
         .append('g')
         .attr('class', 'bubbleChart')
+        .attr("filter", "url(#dropshadow");
+
+    bubbleChart.append("rect")
+        .attr("x", 450)
+        .attr("y", 90)
+        .attr('width', 930)
+        .attr('height', 920)
+        .attr('fill', '#1c2442')
+        .attr("rx", 20)
+        .attr("ry", 20)
 
     const panel = svg
         .append("g")
@@ -100,8 +109,8 @@
     legend.append("text").attr("x", 220).attr("y", 680).text("Adventure").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
 
     var simulation = d3.forceSimulation()
-        .force("xForce", d3.forceX(width + 200).strength(0.05))
-        .force("yForce", d3.forceY((height/2)+100).strength(0.05))
+        .force("xForce", d3.forceX(width + 140).strength(0.05))
+        .force("yForce", d3.forceY((height/2)+160).strength(0.05))
         .force("collide", d3.forceCollide(function(d) {
             return radiusScale(d.Global_Sales) + 5;
         }))
@@ -250,12 +259,9 @@
                 numScore += 1;
                 sumSales += parseFloat(elem.Global_Sales);
                 sumCriticScore += parseFloat(elem.Critic_Score);
-                //console.log(elem.Global_Sales);
-                //console.log(elem.Critic_Score);
             }
         })
 
-        //console.log(sumSales, numSales)
 
         let avgGlobalSales = Number(sumSales / numSales).toFixed(2);
         let avgCriticScore = Number(sumCriticScore / numScore).toFixed(2);
