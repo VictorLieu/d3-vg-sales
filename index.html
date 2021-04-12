@@ -11,6 +11,7 @@
 <svg>
     <g id="chart"></g>
 </svg>
+<button>yeet</button>
 </body>
 
 <script>
@@ -30,9 +31,11 @@
         .attr('class', 'legend')
         .attr("filter", "url(#dropshadow");
 
+    const legendX = 130
+    const legendY = 50
     legend.append("rect")
-        .attr("x", 170)
-        .attr("y", 90)
+        .attr("x", legendX)
+        .attr("y", legendY)
         .attr('width', 200)
         .attr('height', 650)
         .attr('fill', '#1c2442')
@@ -45,10 +48,10 @@
         .attr("filter", "url(#dropshadow");
 
     bubbleChart.append("rect")
-        .attr("x", 450)
-        .attr("y", 90)
-        .attr('width', 930)
-        .attr('height', 920)
+        .attr("x", 360)
+        .attr("y", 50)
+        .attr('width', 950)
+        .attr('height', 850)
         .attr('fill', '#1c2442')
         .attr("rx", 20)
         .attr("ry", 20)
@@ -57,10 +60,53 @@
         .append("g")
         .attr("class", "panel")
         .attr("filter", "url(#dropshadow");
+    const panelX = 1340;
+    const panelY = 50;
+    panel.append("rect")
+        .attr("x", 1340)
+        .attr("y", 50)
+        .attr('width', 450)
+        .attr('height', 450)
+        .attr('fill', '#1c2442')
+        .attr("rx", 20)
+        .attr("ry", 20)
+    panel
+        .append("text")
+        .attr("font-weight", "bold")
+        .attr("font-family", "Roboto")
+        .attr("class", "label").attr("x", panelX + 30).attr("y", panelY + 60).attr("alignment-baseline","middle").attr("fill", "#99a4cf")
+        .text("Genre: ").style("font-size", "35px")
+
+    panel
+        .append("text")
+        .attr("font-weight", "bold")
+        .attr("font-family", "Roboto")
+        .attr("class", "label").attr("x", panelX + 30).attr("y", panelY + 160).attr("alignment-baseline","middle").attr("fill", "#99a4cf")
+        .text("Avg global sales in millions: ").style("font-size", "30px")
+
+    panel
+        .append("text")
+        .attr("font-weight", "bold")
+        .attr("font-family", "Roboto")
+        .attr("class", "label").attr("x", panelX + 30).attr("y", panelY + 260).attr("alignment-baseline","middle").attr("fill", "#99a4cf")
+        .text("Avg critic score: ").style("font-size", "30px")
+
+    panel
+        .append("text")
+        .attr("font-weight", "bold")
+        .attr("font-family", "Roboto")
+        .attr("class", "label").attr("x", panelX + 30).attr("y", panelY + 360).attr("alignment-baseline","middle").attr("fill", "#99a4cf")
+        .text("Avg user score: ").style("font-size", "30px")
+    panel
+        .append("bu")
+
+
+
 
     // drop shadow
     // ref from: https://stackoverflow.com/questions/12277776/how-to-add-drop-shadow-to-d3-js-pie-or-donut-chart
     /* For the drop shadow filter... */
+
     var defs = svg.append("defs");
 
     var filter = defs.append("filter")
@@ -83,36 +129,36 @@
     feMerge.append("feMergeNode")
         .attr("in", "SourceGraphic");
 
-    legend.append("circle").attr("cx",200).attr("cy",130).attr("r", 10).style("fill", "#FBA4FF")
-    legend.append("circle").attr("cx",200).attr("cy",180).attr("r", 10).style("fill", "#8CD9FF")
-    legend.append("circle").attr("cx",200).attr("cy",230).attr("r", 10).style("fill", "#ECDA00")
-    legend.append("circle").attr("cx",200).attr("cy",280).attr("r", 10).style("fill", "#FF9900")
-    legend.append("circle").attr("cx",200).attr("cy",330).attr("r", 10).style("fill", "#FF4F4F")
-    legend.append("circle").attr("cx",200).attr("cy",380).attr("r", 10).style("fill", "#4FFF54")
-    legend.append("circle").attr("cx",200).attr("cy",430).attr("r", 10).style("fill", "#AC1AFF")
-    legend.append("circle").attr("cx",200).attr("cy",480).attr("r", 10).style("fill", "#0100FF")
-    legend.append("circle").attr("cx",200).attr("cy",530).attr("r", 10).style("fill", "#FFFFFF")
-    legend.append("circle").attr("cx",200).attr("cy",580).attr("r", 10).style("fill", "#00FFEE")
-    legend.append("circle").attr("cx",200).attr("cy",630).attr("r", 10).style("fill", "#000000")
-    legend.append("circle").attr("cx",200).attr("cy",680).attr("r", 10).style("fill", "#89550B")
-    legend.append("text").attr("x", 220).attr("y", 130).text("Platform").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", 220).attr("y", 180).text("Racing").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", 220).attr("y", 230).text("Sports").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", 220).attr("y", 280).text("Fighting").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", 220).attr("y", 330).text("Shooter").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", 220).attr("y", 380).text("Role-Playing").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", 220).attr("y", 430).text("Strategy").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", 220).attr("y", 480).text("Action").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", 220).attr("y", 530).text("Misc").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", 220).attr("y", 580).text("Simulation").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", 220).attr("y", 630).text("Puzzle").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", 220).attr("y", 680).text("Adventure").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("circle").attr("cx",160).attr("cy",90).attr("r", 10).style("fill", "#FBA4FF")
+    legend.append("circle").attr("cx",160).attr("cy",140).attr("r", 10).style("fill", "#8CD9FF")
+    legend.append("circle").attr("cx",160).attr("cy",190).attr("r", 10).style("fill", "#ECDA00")
+    legend.append("circle").attr("cx",160).attr("cy",240).attr("r", 10).style("fill", "#FF9900")
+    legend.append("circle").attr("cx",160).attr("cy",290).attr("r", 10).style("fill", "#FF4F4F")
+    legend.append("circle").attr("cx",160).attr("cy",340).attr("r", 10).style("fill", "#4FFF54")
+    legend.append("circle").attr("cx",160).attr("cy",390).attr("r", 10).style("fill", "#AC1AFF")
+    legend.append("circle").attr("cx",160).attr("cy",440).attr("r", 10).style("fill", "#0100FF")
+    legend.append("circle").attr("cx",160).attr("cy",490).attr("r", 10).style("fill", "#FFFFFF")
+    legend.append("circle").attr("cx",160).attr("cy",540).attr("r", 10).style("fill", "#00FFEE")
+    legend.append("circle").attr("cx",160).attr("cy",590).attr("r", 10).style("fill", "#000000")
+    legend.append("circle").attr("cx",160).attr("cy",640).attr("r", 10).style("fill", "#89550B")
+    legend.append("text").attr("x", 180).attr("y", 90).text("Platform").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 180).attr("y", 140).text("Racing").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 180).attr("y", 190).text("Sports").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 180).attr("y", 240).text("Fighting").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 180).attr("y", 290).text("Shooter").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 180).attr("y", 340).text("Role-Playing").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 180).attr("y", 390).text("Strategy").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 180).attr("y", 440).text("Action").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 180).attr("y", 490).text("Misc").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 180).attr("y", 540).text("Simulation").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 180).attr("y", 590).text("Puzzle").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+    legend.append("text").attr("x", 180).attr("y", 640).text("Adventure").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
 
     var simulation = d3.forceSimulation()
-        .force("xForce", d3.forceX(width + 140).strength(0.05))
-        .force("yForce", d3.forceY((height/2)+160).strength(0.05))
+        .force("xForce", d3.forceX(width + 70).strength(0.05))
+        .force("yForce", d3.forceY((height/2)+100).strength(0.05))
         .force("collide", d3.forceCollide(function(d) {
-            return radiusScale(d.Global_Sales) + 5;
+            return radiusScale(d.Global_Sales) + 2;
         }))
 
     var activision = []
@@ -249,14 +295,16 @@
 
     function displayGenreData(d, selectedGenre) {
         numSales = 0;
-        numScore = 0;
+        numCriticScore = 0;
+        numUserScore = 0;
         sumSales = 0;
         sumCriticScore = 0;
 
         loadedData.forEach(elem => {
             if(elem.Genre == selectedGenre && elem.Critic_Score.length != 0) {
                 numSales += 1;
-                numScore += 1;
+                numCriticScore += 1;
+                numUserScore += 1;
                 sumSales += parseFloat(elem.Global_Sales);
                 sumCriticScore += parseFloat(elem.Critic_Score);
             }
@@ -264,45 +312,39 @@
 
 
         let avgGlobalSales = Number(sumSales / numSales).toFixed(2);
-        let avgCriticScore = Number(sumCriticScore / numScore).toFixed(2);
-
-
-        panel.append("rect")
-            .attr("x", 1420)
-            .attr("y", 90)
-            .attr('width', 580)
-            .attr('height', 800)
-            .attr('fill', '#1c2442')
-            .attr("rx", 20)
-            .attr("ry", 20)
-
+        let avgCriticScore = Number(sumCriticScore / numCriticScore).toFixed(2);
+        let avgUserScore = Number(sumCriticScore / numUserScore).toFixed(2);
 
         panel
-        .append("text")
-        .attr("font-family", "Roboto")
-        .attr("class", "genreLabel").attr("x", 1450).attr("y", 150).attr("alignment-baseline","middle").attr("fill", "white")
-        .text("Genre: " + selectedGenre).style("font-size", "50px")
-
-
+            .append("text")
+            .attr("font-weight", "bold")
+            .attr("font-family", "Roboto")
+            .attr("class", "data").attr("x", panelX + 30).attr("y", panelY + 110).attr("alignment-baseline","middle").attr("fill", "white")
+            .text(selectedGenre).style("font-size", "30px")
         panel
-        .append("text")
-        .attr("font-family", "Roboto")
-        .attr("class", "sales").attr("x", 1450).attr("y", 260).attr("alignment-baseline","middle").attr("fill", "white")
-        .text("Avg global sales in millions (USD): " + avgGlobalSales).style("font-size", "30px")
-
+            .append("text")
+            .attr("font-weight", "bold")
+            .attr("font-family", "Roboto")
+            .attr("class", "data").attr("x", panelX + 30).attr("y", panelY + 210).attr("alignment-baseline","middle").attr("fill", "white")
+            .text(avgGlobalSales).style("font-size", "25px")
         panel
-        .append("text")
-        .attr("font-family", "Roboto")
-        .attr("class", "score").attr("x", 1450).attr("y", 360).attr("alignment-baseline","middle").attr("fill", "white")
-        .text("Avg critic score: " + avgCriticScore + "%").style("font-size", "30px")
-
-
+            .append("text")
+            .attr("font-weight", "bold")
+            .attr("font-family", "Roboto")
+            .attr("class", "data").attr("x", panelX + 30).attr("y", panelY + 310).attr("alignment-baseline","middle").attr("fill", "white")
+            .text(avgCriticScore + "%").style("font-size", "25px")
+        panel
+            .append("text")
+            .attr("font-weight", "bold")
+            .attr("font-family", "Roboto")
+            .attr("class", "data").attr("x", panelX + 30).attr("y", panelY + 410).attr("alignment-baseline","middle").attr("fill", "white")
+            .text(avgUserScore + "%").style("font-size", "25px")
 
     }
 
     function handleMouseOut(d) {
         // remove panel
-        panel.selectAll("rect").remove();
+        //panel.selectAll("rect").remove();
         // reset colors
         let games = bubbleChart.selectAll("circle")._groups[0]
         games.forEach(elem => {
@@ -340,7 +382,7 @@
             .attr("opacity", 1.0)
         })
         // remove text
-        panel.selectAll("text").remove();
+        panel.selectAll(".data").remove();
     }
 
 
