@@ -6,6 +6,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <!-- Google fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- css -->
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -16,462 +20,43 @@
             <div id="panel1"></div>
             <div id="panel2">
                 <!--
-                <h1> Filter by publisher </h1>
-                <form>
-                    <select id="pub">
-                        <option value="none">None</option>
-                        <option value="activision">Activision</option>
-                        <option value="bethesda">Bethesda</option>
-                        <option value="ea">EA</option>
-                        <option value="nintendo">Nintendo</option>
-                        <option value="ubisoft">Ubisoft</option>
-                    </select>
-                    <br><br>
-                    <input type="submit" value="Submit" oninput="filterGames()">
-                </form>
+                <div class="select-box">
+                    <div class="options-container">
+                        <div class="option">
+                            <label for="none">None</label>
+                            <input type="radio" class="radio" id="none" name="publisher">
+                        </div>
+                        <div class="option">
+                            <label for="activision">Activision</label>
+                            <input type="radio" class="radio" id="activision" name="publisher">
+                        </div>
+                        <div class="option">
+                            <label for="bethesda">Bethesda</label>
+                            <input type="radio" class="radio" id="bethesda" name="publisher">
+                        </div>
+                        <div class="option">
+                            <label for="ea">Electronic Arts</label>
+                            <input type="radio" class="radio" id="ea" name="publisher">
+                        </div>
+                        <div class="option">
+                            <label for="nintendo">Nintendo</label>
+                            <input type="radio" class="radio" id="nintendo" name="publisher">
+                        </div>
+                        <div class="option">
+                            <label for="ubisoft">Ubisoft</label>
+                            <input type="radio" class="radio" id="ubisoft" name="publisher">
+                        </div>
+                    </div>
+                    <div class="selected">
+                        Filter by publisher
+                    </div>
+                </div>
                 -->
             </div>
         </div>
     </div>
-<!--
-<svg>
-    <g id="chart"></g>
-</svg>
--->
 </body>
 
-<script>
-
-    var data = d3.csv("filteredSubset.csv")
-        .then(filterData)
-
-    var width = 420,
-        height = 800;
-
-    var svg = d3.select("#chart")
-        .append("svg")
-        .append("g")
-
-    var svg1 = d3.select("#legend")
-        .append("svg")
-        .append("g")
-
-    var svg3 = d3.select("#panel1")
-        .append("svg")
-        .append("g")
-
-    var legend = svg1
-        .append('g')
-        .attr('class', 'legend')
-        .attr("filter", "url(#dropshadow");
-
-    const legendX = 100
-    const legendXcircle = legendX - 70
-    const legendXtext = legendX - 50
-    const legendY = 50
-    legend.append("rect")
-        .attr("x", legendX)
-        .attr("y", legendY)
-        .attr('width', 200)
-        .attr('height', 650)
-        .attr('fill', '#1c2442')
-        .attr("rx", 20)
-        .attr("ry", 20)
-
-    var bubbleChart = svg
-        .append('g')
-        .attr('class', 'bubbleChart')
-        .attr("filter", "url(#dropshadow");
-
-    bubbleChart.append("rect")
-        .attr("x", 0)
-        .attr("y", 50)
-        .attr('width', 950)
-        .attr('height', 870)
-        .attr('fill', '#1c2442')
-        .attr("rx", 20)
-        .attr("ry", 20)
-
-    const panel = svg3
-        .append("g")
-        .attr("class", "panel")
-        .attr("filter", "url(#dropshadow");
-    const panelX = 50;
-    const panelY = 50;
-    panel.append("rect")
-        .attr("x", panelX)
-        .attr("y", panelY)
-        .attr('width', 450)
-        .attr('height', 450)
-        .attr('fill', '#1c2442')
-        .attr("rx", 20)
-        .attr("ry", 20)
-    panel
-        .append("text")
-        .attr("font-weight", "bold")
-        .attr("font-family", "Roboto")
-        .attr("class", "label").attr("x", panelX + 30).attr("y", panelY + 60).attr("alignment-baseline","middle").attr("fill", "#99a4cf")
-        .text("Genre: ").style("font-size", "35px")
-
-    panel
-        .append("text")
-        .attr("font-weight", "bold")
-        .attr("font-family", "Roboto")
-        .attr("class", "label").attr("x", panelX + 30).attr("y", panelY + 160).attr("alignment-baseline","middle").attr("fill", "#99a4cf")
-        .text("Avg global sales in millions: ").style("font-size", "30px")
-
-    panel
-        .append("text")
-        .attr("font-weight", "bold")
-        .attr("font-family", "Roboto")
-        .attr("class", "label").attr("x", panelX + 30).attr("y", panelY + 260).attr("alignment-baseline","middle").attr("fill", "#99a4cf")
-        .text("Avg critic score: ").style("font-size", "30px")
-
-    panel
-        .append("text")
-        .attr("font-weight", "bold")
-        .attr("font-family", "Roboto")
-        .attr("class", "label").attr("x", panelX + 30).attr("y", panelY + 360).attr("alignment-baseline","middle").attr("fill", "#99a4cf")
-        .text("Avg user score: ").style("font-size", "30px")
-
-
-
-
-
-    // drop shadow
-    // ref from: https://stackoverflow.com/questions/12277776/how-to-add-drop-shadow-to-d3-js-pie-or-donut-chart
-    /* For the drop shadow filter... */
-
-    var defs = svg.append("defs");
-
-    var filter = defs.append("filter")
-        .attr("id", "dropshadow")
-
-    filter.append("feGaussianBlur")
-        .attr("in", "SourceAlpha")
-        .attr("stdDeviation", 5)
-        .attr("result", "blur");
-    filter.append("feOffset")
-        .attr("in", "blur")
-        .attr("dx", 2)
-        .attr("dy", 2)
-        .attr("result", "offsetBlur");
-
-    var feMerge = filter.append("feMerge");
-
-    feMerge.append("feMergeNode")
-        .attr("in", "offsetBlur")
-    feMerge.append("feMergeNode")
-        .attr("in", "SourceGraphic");
-
-    legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",legendY+40).attr("r", 10).style("fill", "#FBA4FF")
-    legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",140).attr("r", 10).style("fill", "#8CD9FF")
-    legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",190).attr("r", 10).style("fill", "#ECDA00")
-    legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",240).attr("r", 10).style("fill", "#FF9900")
-    legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",290).attr("r", 10).style("fill", "#FF4F4F")
-    legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",340).attr("r", 10).style("fill", "#4FFF54")
-    legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",390).attr("r", 10).style("fill", "#AC1AFF")
-    legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",440).attr("r", 10).style("fill", "#0100FF")
-    legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",490).attr("r", 10).style("fill", "#FFFFFF")
-    legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",540).attr("r", 10).style("fill", "#00FFEE")
-    legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",590).attr("r", 10).style("fill", "#000000")
-    legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",640).attr("r", 10).style("fill", "#89550B")
-    legend.append("text").attr("x", legendX+legendXtext).attr("y", 90).text("Platform").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", legendX+legendXtext).attr("y", 140).text("Racing").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", legendX+legendXtext).attr("y", 190).text("Sports").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", legendX+legendXtext).attr("y", 240).text("Fighting").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", legendX+legendXtext).attr("y", 290).text("Shooter").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", legendX+legendXtext).attr("y", 340).text("Role-Playing").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", legendX+legendXtext).attr("y", 390).text("Strategy").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", legendX+legendXtext).attr("y", 440).text("Action").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", legendX+legendXtext).attr("y", 490).text("Misc").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", legendX+legendXtext).attr("y", 540).text("Simulation").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", legendX+legendXtext).attr("y", 590).text("Puzzle").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-    legend.append("text").attr("x", legendX+legendXtext).attr("y", 640).text("Adventure").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-
-    var simulation = d3.forceSimulation()
-        .force("xForce", d3.forceX(width + 70).strength(0.05))
-        .force("yForce", d3.forceY((height/2)+100).strength(0.05))
-        .force("collide", d3.forceCollide(function(d) {
-            return radiusScale(d.Global_Sales) + 2;
-        }))
-
-    var activision = []
-    var bethesda = []
-    var ea = []
-    var nintendo = []
-    var ubisoft = []
-
-
-    var radiusScale = d3.scaleSqrt([1,83]).range([1,10])
-    var loadedData
-
-    function filterGames() {
-        console.log("filtering games")
-    }
-
-    function filterData(games) {
-        loadedData = games
-        for (i = 0; i < games.length; i++) {
-            if (games[i].Publisher == "Activision") {
-                activision.push(games[i])
-            }
-            else if (games[i].Publisher == "Bethesda Softworks") {
-                bethesda.push(games[i])
-            }
-            else if (games[i].Publisher == "Electronic Arts") {
-                ea.push(games[i])
-            }
-            else if (games[i].Publisher == "Nintendo") {
-                nintendo.push(games[i])
-            }
-            else if (games[i].Publisher == "Ubisoft") {
-                ubisoft.push(games[i])
-            }
-
-        }
-
-        drawCircles(games)
-    }
-
-    function drawCircles(games) {
-        var circles = bubbleChart.selectAll(".Game")
-            .data(games)
-            .enter().append("circle")
-            .attr("class", "Game")
-            .attr("class", d => {return d.Genre})
-            .attr("r", function(d) {
-                return radiusScale(d.Global_Sales)
-            })
-            .attr("fill", function(d) {
-                switch(d.Genre) {
-                    case "Platform":
-                        return "#FBA4FF"
-                    case "Racing":
-                        return "#8CD9FF"
-                    case "Sports":
-                        return "#ECDA00"
-                    case "Fighting":
-                        return "#FF9900"
-                    case "Shooter":
-                        return "#FF4F4F"
-                    case "Role-Playing":
-                        return "#4FFF54"
-                    case "Strategy":
-                        return "#AC1AFF"
-                    case "Action":
-                        return "#0100FF"
-                    case "Misc":
-                        return "#FFFFFF"
-                    case "Simulation":
-                        return "#00FFEE"
-                    case "Puzzle":
-                        return "#000000"
-                    case "Adventure":
-                        return "#89550B"
-                }
-            })
-            .attr("stroke", "none")
-            .attr("stroke-width", 3)
-            .attr("cx", 100)
-            .attr("cy", 100)
-            .on("click", handleClick)
-            .on("mouseover", handleMouseOver)
-            .on("mouseout", handleMouseOut)
-            .text(function(d) {
-                return d.Name;
-            })
-
-
-        simulation.nodes(games)
-            .on("tick", ticked)
-
-        function ticked() {
-            circles
-                .attr("cx", function(d) {
-                    return d.x
-                })
-                .attr("cy", function(d) {
-                    return d.y
-                })
-        }
-
-    }
-
-    function handleClick(d) {
-        console.log(d.path[0].__data__);
-        console.log(d.path[0].__data__.Name);
-    }
-
-    function handleMouseOver(d) {
-        // get game title
-        let title = d.path[0].__data__.Name
-
-        // update each node color
-        let selectedGenre = d.path[0].__data__.Genre
-        let games = bubbleChart.selectAll("circle")._groups[0]
-        let selected = []
-        let notSelected = []
-        games.forEach(elem => {
-            //console.log(elem.className.baseVal)
-            if (elem.className.baseVal == selectedGenre) {
-                selected.push(elem)
-            }
-            else {
-                notSelected.push(elem)
-            }
-        })
-        selected.forEach(elem => {
-
-        })
-        notSelected.forEach(elem => {
-            d3.select(elem).transition().duration(400).style("fill", "#485482").attr("opacity", 0.1)
-        })
-
-        // display data about genre
-        displayGenreData(d, selectedGenre)
-    }
-
-    function displayGenreData(d, selectedGenre) {
-        numSales = 0;
-        numCriticScore = 0;
-        numUserScore = 0;
-        sumSales = 0;
-        sumCriticScore = 0;
-
-        loadedData.forEach(elem => {
-            if(elem.Genre == selectedGenre && elem.Critic_Score.length != 0) {
-                numSales += 1;
-                numCriticScore += 1;
-                numUserScore += 1;
-                sumSales += parseFloat(elem.Global_Sales);
-                sumCriticScore += parseFloat(elem.Critic_Score);
-            }
-        })
-
-
-        let avgGlobalSales = Number(sumSales / numSales).toFixed(2);
-        let avgCriticScore = Number(sumCriticScore / numCriticScore).toFixed(2);
-        let avgUserScore = Number(sumCriticScore / numUserScore).toFixed(2);
-
-        panel
-            .append("text")
-            .attr("font-weight", "bold")
-            .attr("font-family", "Roboto")
-            .attr("class", "data").attr("x", panelX + 30).attr("y", panelY + 110).attr("alignment-baseline","middle").attr("fill", "white")
-            .text(selectedGenre).style("font-size", "30px")
-        panel
-            .append("text")
-            .attr("font-weight", "bold")
-            .attr("font-family", "Roboto")
-            .attr("class", "data").attr("x", panelX + 30).attr("y", panelY + 210).attr("alignment-baseline","middle").attr("fill", "white")
-            .text(avgGlobalSales).style("font-size", "25px")
-        panel
-            .append("text")
-            .attr("font-weight", "bold")
-            .attr("font-family", "Roboto")
-            .attr("class", "data").attr("x", panelX + 30).attr("y", panelY + 310).attr("alignment-baseline","middle").attr("fill", "white")
-            .text(avgCriticScore + "%").style("font-size", "25px")
-        panel
-            .append("text")
-            .attr("font-weight", "bold")
-            .attr("font-family", "Roboto")
-            .attr("class", "data").attr("x", panelX + 30).attr("y", panelY + 410).attr("alignment-baseline","middle").attr("fill", "white")
-            .text(avgUserScore + "%").style("font-size", "25px")
-
-    }
-
-    function handleMouseOut(d) {
-        // remove panel
-        //panel.selectAll("rect").remove();
-        // reset colors
-        let games = bubbleChart.selectAll("circle")._groups[0]
-        games.forEach(elem => {
-            let genre = elem.className.baseVal
-            d3.select(elem)
-                .interrupt()
-                .style("fill", function(d) {
-                switch(d.Genre) {
-                    case "Platform":
-                        return "#FBA4FF"
-                    case "Racing":
-                        return "#8CD9FF"
-                    case "Sports":
-                        return "#ECDA00"
-                    case "Fighting":
-                        return "#FF9900"
-                    case "Shooter":
-                        return "#FF4F4F"
-                    case "Role-Playing":
-                        return "#4FFF54"
-                    case "Strategy":
-                        return "#AC1AFF"
-                    case "Action":
-                        return "#0100FF"
-                    case "Misc":
-                        return "#FFFFFF"
-                    case "Simulation":
-                        return "#00FFEE"
-                    case "Puzzle":
-                        return "#000000"
-                    case "Adventure":
-                        return "#89550B"
-                }
-            })
-            .attr("opacity", 1.0)
-        })
-        // remove text
-        panel.selectAll(".data").remove();
-    }
-
-
-</script>
-
-<style>
-
-    html, body {
-        margin: 0;
-        height: 100%;
-        width: 100%;
-        background-color: #242A41;
-    }
-
-
-
-    svg {
-        height: 100%;
-        width: 100%;
-    }
-
-    #wrapper {
-        display: flex;
-        height: 100%;
-    }
-
-    #legend {
-        flex: 1 0 20%;
-        height: 100%;
-        order: 1;
-    }
-    #chart {
-        flex: 2 0 50%;
-        height: 100%;
-        order: 2
-    }
-    #panels {
-        flex: 1 0 30%;
-        height: 100%;
-        order: 3;
-        display: flex;
-        flex-direction: column;
-
-    }
-    #panel1 {
-        height: 60%
-    }
-
-
-</style>
-
+<script type="text/javascript" src="main.js"></script>
 
 </html>
