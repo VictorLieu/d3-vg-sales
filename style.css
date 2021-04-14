@@ -16,11 +16,22 @@ svg {
     height: 100%;
 }
 
-#legend {
+#legend-container {
     flex: 1 0 20%;
     height: 100%;
     order: 1;
+    display: flex;
+    flex-direction: column;
 }
+
+#legend {
+    height: 100%;
+}
+/*
+#button-container {
+    height: 25%;
+}
+*/
 #chart {
     flex: 2 0 50%;
     height: 100%;

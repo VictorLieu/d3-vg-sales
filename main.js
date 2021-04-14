@@ -30,15 +30,33 @@ var legend = svg1
 const legendX = 100
 const legendXcircle = legendX - 70
 const legendXtext = legendX - 50
-const legendY = 50
+const legendY = 30
 legend.append("rect")
     .attr("x", legendX)
     .attr("y", legendY)
     .attr('width', 200)
-    .attr('height', 650)
+    .attr('height', 605)
     .attr('fill', '#1c2442')
     .attr("rx", 20)
     .attr("ry", 20)
+legend.append("rect")
+    .attr("x", legendX)
+    .attr("y", legendY + 615)
+    .attr('width', 200)
+    .attr('height', 265)
+    .attr('fill', '#1c2442')
+    .attr("rx", 20)
+    .attr("ry", 20)
+// Activision button
+appendButton(legend, "./assets/Activision.svg",legendX+15, legendY+625, legendX+30, legendY+630, "gray", "activision")
+// Bethesda button
+appendButton(legend, "./assets/Bethesda_Softworks_Logo.svg",legendX+15, legendY+675, legendX+30, legendY+680, "white", "bethesda softworks")
+// EA button
+appendButton(legend, "./assets/ea.svg",legendX+15, legendY+725, legendX+30, legendY+728, "white", "electronic arts")
+// Nintendo button
+appendButton(legend, "./assets/Nintendo.svg",legendX+15, legendY+775, legendX+30, legendY+778, "#e60012", "nintendo")
+// Ubisoft button
+appendButton(legend, "./assets/ubisoft.svg",legendX+15, legendY+825, legendX+30, legendY+830, "white", "ubisoft")
 
 var bubbleChart = svg
     .append('g')
@@ -47,7 +65,7 @@ var bubbleChart = svg
 
 bubbleChart.append("rect")
     .attr("x", 20)
-    .attr("y", 50)
+    .attr("y", 30)
     .attr('width', 900)
     .attr('height', 870)
     .attr('fill', '#1c2442')
@@ -59,7 +77,7 @@ const panel = svg3
     .attr("class", "panel")
     .attr("filter", "url(#dropshadow");
 const panelX = 50;
-const panelY = 50;
+const panelY = 30;
 panel.append("rect")
     .attr("x", panelX)
     .attr("y", panelY)
@@ -68,34 +86,14 @@ panel.append("rect")
     .attr('fill', '#1c2442')
     .attr("rx", 20)
     .attr("ry", 20)
-/*
-const infoPanel = svg4
-    .append("g")
-    .attr("class", "panel")
-    .attr("filter", "url(#dropshadow");
-infoPanel.append("rect")
-    .attr("x", panelX)
-    .attr("y", panelY - 35)
-    .attr('width', 450)
-    .attr('height', 250)
-    .attr('fill', '#1c2442')
-    .attr("rx", 20)
-    .attr("ry", 20)
-appendText(infoPanel, "30px", panelX + 30, 50, true, "Instructions")
-appendText(infoPanel, "20px", panelX + 30, 100, true, "Hover -")
-appendText(infoPanel, "20px", panelX + 100, 100, false, "Show genre information")
-appendText(infoPanel, "20px", panelX + 30, 140, true, "Click -")
-appendText(infoPanel, "20px", panelX + 100, 140, false, "Show specific game information")
-*/
 // initialize panel text
 initPanelText();
 
 function initPanelText() {
-    appendText(panel, "30px", panelX + 30, panelY + 60, true, "Genre: ")
-    appendText(panel, "30px", panelX + 30, panelY + 160, true, "Avg global sales in millions: ")
-    appendText(panel, "30px", panelX + 30, panelY + 260, true, "Avg critic score: ")
-    appendText(panel, "30px", panelX + 30, panelY + 360, true, "Avg user score: ")
-    appendText(panel, "30px", panelX + 30, panelY + 460, true, "Highest selling publisher: ")
+    appendText(panel, "30px", panelX + 30, panelY + 60, true, "How do I use this? ")
+    appendText(panel, "18px", panelX + 30, panelY + 100, false, "1. Hover nodes to reveal genre data")
+    appendText(panel, "18px", panelX + 30, panelY + 140, false, "2. Click node to reveal game data")
+    appendText(panel, "18px", panelX + 30, panelY + 180, false, "3. Hover publisher logos to reveal publisher data")
 }
 
 
@@ -126,34 +124,34 @@ feMerge.append("feMergeNode")
     .attr("in", "SourceGraphic");
 
 // initialize legend
-legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",legendY+40).attr("r", 10).style("fill", "#FBA4FF")
-legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",140).attr("r", 10).style("fill", "#8CD9FF")
-legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",190).attr("r", 10).style("fill", "#ECDA00")
-legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",240).attr("r", 10).style("fill", "#FF9900")
-legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",290).attr("r", 10).style("fill", "#FF4F4F")
-legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",340).attr("r", 10).style("fill", "#4FFF54")
-legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",390).attr("r", 10).style("fill", "#AC1AFF")
-legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",440).attr("r", 10).style("fill", "#0100FF")
-legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",490).attr("r", 10).style("fill", "#FFFFFF")
-legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",540).attr("r", 10).style("fill", "#00FFEE")
-legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",590).attr("r", 10).style("fill", "#000000")
-legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",640).attr("r", 10).style("fill", "#89550B")
-legend.append("text").attr("x", legendX+legendXtext).attr("y", 90).text("Platform").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-legend.append("text").attr("x", legendX+legendXtext).attr("y", 140).text("Racing").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-legend.append("text").attr("x", legendX+legendXtext).attr("y", 190).text("Sports").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-legend.append("text").attr("x", legendX+legendXtext).attr("y", 240).text("Fighting").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-legend.append("text").attr("x", legendX+legendXtext).attr("y", 290).text("Shooter").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-legend.append("text").attr("x", legendX+legendXtext).attr("y", 340).text("Role-Playing").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-legend.append("text").attr("x", legendX+legendXtext).attr("y", 390).text("Strategy").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-legend.append("text").attr("x", legendX+legendXtext).attr("y", 440).text("Action").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-legend.append("text").attr("x", legendX+legendXtext).attr("y", 490).text("Misc").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-legend.append("text").attr("x", legendX+legendXtext).attr("y", 540).text("Simulation").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-legend.append("text").attr("x", legendX+legendXtext).attr("y", 590).text("Puzzle").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
-legend.append("text").attr("x", legendX+legendXtext).attr("y", 640).text("Adventure").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "white").attr("font-family", "Roboto")
+legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",60).attr("r", 10).style("fill", "#FBA4FF")
+legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",110).attr("r", 10).style("fill", "#8CD9FF")
+legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",160).attr("r", 10).style("fill", "#ECDA00")
+legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",210).attr("r", 10).style("fill", "#FF9900")
+legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",260).attr("r", 10).style("fill", "#FF4F4F")
+legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",310).attr("r", 10).style("fill", "#4FFF54")
+legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",360).attr("r", 10).style("fill", "#AC1AFF")
+legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",410).attr("r", 10).style("fill", "#0100FF")
+legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",460).attr("r", 10).style("fill", "#FFFFFF")
+legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",510).attr("r", 10).style("fill", "#00FFEE")
+legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",560).attr("r", 10).style("fill", "#000000")
+legend.append("circle").attr("cx",legendX+legendXcircle).attr("cy",610).attr("r", 10).style("fill", "#89550B")
+legend.append("text").attr("x", legendX+legendXtext).attr("y", 60).text("Platform").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "#99a4cf").attr("font-family", "Roboto")
+legend.append("text").attr("x", legendX+legendXtext).attr("y", 110).text("Racing").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "#99a4cf").attr("font-family", "Roboto")
+legend.append("text").attr("x", legendX+legendXtext).attr("y", 160).text("Sports").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "#99a4cf").attr("font-family", "Roboto")
+legend.append("text").attr("x", legendX+legendXtext).attr("y", 210).text("Fighting").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "#99a4cf").attr("font-family", "Roboto")
+legend.append("text").attr("x", legendX+legendXtext).attr("y", 260).text("Shooter").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "#99a4cf").attr("font-family", "Roboto")
+legend.append("text").attr("x", legendX+legendXtext).attr("y", 310).text("Role-Playing").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "#99a4cf").attr("font-family", "Roboto")
+legend.append("text").attr("x", legendX+legendXtext).attr("y", 360).text("Strategy").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "#99a4cf").attr("font-family", "Roboto")
+legend.append("text").attr("x", legendX+legendXtext).attr("y", 410).text("Action").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "#99a4cf").attr("font-family", "Roboto")
+legend.append("text").attr("x", legendX+legendXtext).attr("y", 460).text("Misc").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "#99a4cf").attr("font-family", "Roboto")
+legend.append("text").attr("x", legendX+legendXtext).attr("y", 510).text("Simulation").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "#99a4cf").attr("font-family", "Roboto")
+legend.append("text").attr("x", legendX+legendXtext).attr("y", 560).text("Puzzle").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "#99a4cf").attr("font-family", "Roboto")
+legend.append("text").attr("x", legendX+legendXtext).attr("y", 610).text("Adventure").style("font-size", "25px").attr("alignment-baseline","middle").attr("fill", "#99a4cf").attr("font-family", "Roboto")
 
 var simulation = d3.forceSimulation()
     .force("xForce", d3.forceX(width + 70).strength(0.05))
-    .force("yForce", d3.forceY((height/2)+100).strength(0.05))
+    .force("yForce", d3.forceY((height/2)+70).strength(0.05))
     .force("collide", d3.forceCollide(function(d) {
         return radiusScale(d.Global_Sales) + 2;
     }))
@@ -299,6 +297,28 @@ function handleMouseOver(d) {
     displayGenreData(d, selectedGenre)
 }
 
+function appendButton(svgElem, src, buttonx, buttony, labelx, labely, color, arg) {
+    let buttonGroup = svgElem.append("g")
+    buttonGroup.append("rect")
+        .attr("x", buttonx)
+        .attr("y", buttony)
+        .attr('width', 170)
+        .attr('height', 40)
+        .attr('fill', color)
+        .attr("rx", 10)
+        .attr("ry", 10)
+    buttonGroup.append("svg:image")
+        .attr("xlink:href", src)
+        .attr("width", 140)
+        .attr("height", 35)
+        .attr("x", labelx)
+        .attr("y", labely)
+    buttonGroup
+        .on("mouseover", () => this.filterByPub(arg))
+        .on("mouseout", handleMouseOut)
+
+}
+
 function appendText(svgElem, fontSize, x, y, isBold, content) {
     if (!isBold) {
         svgElem
@@ -323,6 +343,69 @@ function appendText(svgElem, fontSize, x, y, isBold, content) {
             .attr("fill", "#99a4cf")
             .text(content).style("font-size", fontSize)
     }
+}
+
+function filterByPub(publisher) {
+    let publisherTitles = []
+    let maxSales = Number.MIN_SAFE_INTEGER;
+    let topTitle = ""
+    let totalGlobalSales = 0
+    let numCriticScore = 0;
+    let numUserScore = 0;
+    let sumCriticScore = 0;
+    let sumUserScore = 0;
+    loadedData.forEach(elem => {
+        if(elem.Publisher.toUpperCase() === publisher.toUpperCase() ) {
+            publisherTitles.push(elem.Name)
+            if (parseFloat(elem.Global_Sales) > maxSales) {
+                maxSales = parseFloat(elem.Global_Sales);
+                topTitle = elem.Name;
+                totalGlobalSales += parseFloat(elem.Global_Sales)
+                if(elem.Critic_Score.length != 0 && elem.User_Score.length != 0) {
+                    sumCriticScore += parseFloat(elem.Critic_Score);
+                    // since user score is measured /10
+                    sumUserScore += parseFloat(elem.User_Score * 10);
+                    numCriticScore += 1;
+                    numUserScore += 1;
+                }
+            }
+        }
+    })
+
+    let avgCriticScore = Number(sumCriticScore / numCriticScore).toFixed(2);
+    let avgUserScore = Number(sumUserScore / numUserScore).toFixed(2);
+
+    let games = bubbleChart.selectAll("circle")._groups[0]
+    let selected = []
+    let notSelected = []
+
+    games.forEach(elem => {
+        if (publisherTitles.includes(elem.id)) {
+            selected.push(elem)
+        }
+        else {
+            notSelected.push(elem)
+        }
+    })
+    notSelected.forEach(elem => {
+        d3.select(elem).transition().duration(400).style("fill", "#485482").attr("opacity", 0.1)
+    })
+
+    // update panel text
+    panel.selectAll("text").remove();
+    // set labels
+    appendText(panel, "30px", panelX+30, panelY+60, true, "All games by: ")
+    appendText(panel, "30px", panelX+30, panelY+160, true, "Total global sales (in millions): ")
+    appendText(panel, "30px", panelX+30, panelY+260, true, "Highest selling title: ")
+    appendText(panel, "30px", panelX+30, panelY+360, true, "Avg critic score: ")
+    appendText(panel, "30px", panelX+30, panelY+460, true, "Avg user score: ")
+
+    appendText(panel, "20px", panelX+30, panelY+100, false, publisher)
+    appendText(panel, "20px", panelX+30, panelY+200, false, totalGlobalSales)
+    appendText(panel, "20px", panelX+30, panelY+300, false, topTitle)
+    appendText(panel, "20px", panelX+30, panelY+400, false, avgCriticScore + "%")
+    appendText(panel, "20px", panelX+30, panelY+500, false, avgUserScore + "%")
+
 }
 
 function displayGameData(selectedGame) {
@@ -351,7 +434,6 @@ function displayGameData(selectedGame) {
     if (selectedGame.Rating.length > 0) {
         console.log(selectedGame.Rating)
         panel.append("svg:image")
-            .attr("xlink:href", "./assets/ESRB_Everyone.svg")
             .attr("xlink:href", function () {
                 switch (selectedGame.Rating) {
                     case "E10+":
@@ -367,7 +449,7 @@ function displayGameData(selectedGame) {
             .attr("width", 80)
             .attr("height", 100)
             .attr("x", panelX + 250)
-            .attr("y", panelX + 590);
+            .attr("y", panelY + 590);
     }
     else {
         appendText(panel, "20px", panelX+250, panelY+590, false, "N/A")
@@ -376,14 +458,14 @@ function displayGameData(selectedGame) {
 }
 
 function displayGenreData(d, selectedGenre) {
-    numSales = 0;
-    numCriticScore = 0;
-    numUserScore = 0;
-    sumSales = 0;
-    sumCriticScore = 0;
-    sumUserScore = 0;
-    maxSales = Number.MIN_SAFE_INTEGER;
-    topPublisher = ""
+    let numSales = 0;
+    let numCriticScore = 0;
+    let numUserScore = 0;
+    let sumSales = 0;
+    let sumCriticScore = 0;
+    let sumUserScore = 0;
+    let maxSales = Number.MIN_SAFE_INTEGER;
+    let topPublisher = ""
 
     loadedData.forEach(elem => {
         if(elem.Genre == selectedGenre && elem.Critic_Score.length != 0 && elem.User_Score.length != 0) {
@@ -405,10 +487,21 @@ function displayGenreData(d, selectedGenre) {
     let avgCriticScore = Number(sumCriticScore / numCriticScore).toFixed(2);
     let avgUserScore = Number(sumUserScore / numUserScore).toFixed(2);
 
+    // remove text
+    panel.selectAll("Text").remove();
+
+    // display labels
+    appendText(panel, "30px", panelX + 30, panelY + 60, true, "Genre: ")
+    appendText(panel, "30px", panelX + 30, panelY + 160, true, "Avg global sales in millions: ")
+    appendText(panel, "30px", panelX + 30, panelY + 260, true, "Avg critic score: ")
+    appendText(panel, "30px", panelX + 30, panelY + 360, true, "Avg user score: ")
+    appendText(panel, "30px", panelX + 30, panelY + 460, true, "Highest selling publisher: ")
+
+    // display data
     appendText(panel, 20, panelX+30, panelY+110, false, selectedGenre)
     appendText(panel, 20, panelX+30, panelY+210, false, avgGlobalSales)
-    appendText(panel, 20, panelX+30, panelY+310, false, avgCriticScore)
-    appendText(panel, 20, panelX+30, panelY+410, false, avgUserScore)
+    appendText(panel, 20, panelX+30, panelY+310, false, avgCriticScore + "%")
+    appendText(panel, 20, panelX+30, panelY+410, false, avgUserScore + "%")
     appendText(panel, 20, panelX+30, panelY+510, false, topPublisher)
 
 }
