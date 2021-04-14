@@ -357,10 +357,10 @@ function filterByPub(publisher) {
     loadedData.forEach(elem => {
         if(elem.Publisher.toUpperCase() === publisher.toUpperCase() ) {
             publisherTitles.push(elem.Name)
+            parseFloat(elem.Global_Sales) > 0 ? totalGlobalSales += parseFloat(elem.Global_Sales) : "";
             if (parseFloat(elem.Global_Sales) > maxSales) {
                 maxSales = parseFloat(elem.Global_Sales);
                 topTitle = elem.Name;
-                totalGlobalSales += parseFloat(elem.Global_Sales)
                 if(elem.Critic_Score.length != 0 && elem.User_Score.length != 0) {
                     sumCriticScore += parseFloat(elem.Critic_Score);
                     // since user score is measured /10
@@ -401,7 +401,7 @@ function filterByPub(publisher) {
     appendText(panel, "30px", panelX+30, panelY+460, true, "Avg user score: ")
 
     appendText(panel, "20px", panelX+30, panelY+100, false, publisher)
-    appendText(panel, "20px", panelX+30, panelY+200, false, totalGlobalSales)
+    appendText(panel, "20px", panelX+30, panelY+200, false, totalGlobalSales.toFixed(2))
     appendText(panel, "20px", panelX+30, panelY+300, false, topTitle)
     appendText(panel, "20px", panelX+30, panelY+400, false, avgCriticScore + "%")
     appendText(panel, "20px", panelX+30, panelY+500, false, avgUserScore + "%")
